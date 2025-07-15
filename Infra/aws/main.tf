@@ -30,20 +30,16 @@ resource "aws_security_group" "blog_sg" {
   description = "Allow ports for frontend and backend"
 
   ingress {
-    from_port   = 4173
-    to_port     = 4173
+    description = "HTTP"
+    from_port   = 80
+    to_port     = 80
     protocol    = "tcp"
     cidr_blocks = ["0.0.0.0/0"]
   }
 
+  # Optional: allow SSH for debugging
   ingress {
-    from_port   = 5000
-    to_port     = 5000
-    protocol    = "tcp"
-    cidr_blocks = ["0.0.0.0/0"]
-  }
-
-  ingress {
+    description = "SSH"
     from_port   = 22
     to_port     = 22
     protocol    = "tcp"

@@ -4,6 +4,8 @@ services:
   frontend:
     build:
       context: ./frontend
+      args:
+        VITE_API_URL: /api
     expose:
       - "3001"
     depends_on:
