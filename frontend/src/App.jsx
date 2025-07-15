@@ -8,14 +8,27 @@ function App() {
   const [title, setTitle] = useState('');
   const [content, setContent] = useState('');
 
-  const fetchBlogs = async () => {
-  const res = await axios.get(`${API}/api/blogs`);
-  setBlogs(res.data);
+//   const fetchBlogs = async () => {
+//   const res = await axios.get(`${API}/api/blogs`);
+//   setBlogs(res.data.blogs || []); // only use res.data.blogs
+// };
+ const fetchBlogs = async () => {
+  try {
+    const res = await axios.get(`${API}/blogs`);
+    console.log("Fetched response:", res.data); // still useful for debugging
+    setBlogs(Array.isArray(res.data) ? res.data : []);
+  } catch (error) {
+    console.error("Error fetching blogs:", error);
+    setBlogs([]); // fallback
+  }
 };
+
+
+
 
   const createBlog = async () => {
     if (!title.trim() || !content.trim()) return;
-    await axios.post(`${API}/api/blogs`, { title, content });
+    await axios.post(`${API}/blogs`, { title, content });
     fetchBlogs();
     setTitle('');
     setContent('');
